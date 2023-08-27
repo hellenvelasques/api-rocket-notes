@@ -1,4 +1,4 @@
-<h1 align="center"> Backend - API - RocktNotes </h1>
+<h1 align="center"> Backend - API - RocketNotes </h1>
 
 <h2 id="project">Projeto</h2>
 
