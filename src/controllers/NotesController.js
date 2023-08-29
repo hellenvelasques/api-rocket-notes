@@ -1,4 +1,5 @@
 const knex = require('../database/knex');
+const AppError = require('../utils/AppError');
 
 class NotesController {
   async create(request, response) {
@@ -11,7 +12,7 @@ class NotesController {
       user_id
     });
 
-    const linksInsert = links.map(link => {
+    const linksInsert = links.map((link) => {
       return {
         note_id,
         url: link
@@ -20,11 +21,11 @@ class NotesController {
 
     await knex('links').insert(linksInsert);
     
-    const tagsInsert = tags.map(name => {
+    const tagsInsert = tags.map((name) => {
       return {
         note_id,
-        name,
-        user_id
+        user_id,
+        name
       };
     });
     
@@ -66,6 +67,7 @@ class NotesController {
         .whereLike("notes.title", `%${title}%`)
         .whereIn("name", filterTags)
         .innerJoin("notes", "notes.id", "tags.note_id")
+        .groupBy("notes.id")
         .orderBy("notes.title")
 
     } else {
